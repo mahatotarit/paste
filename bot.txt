@@ -1,0 +1,122 @@
+
+let fixed_amount = 0.00003;
+let amount = 0.00003;
+
+async function sendRequest() {
+  const url = 'https://stake.com/_api/graphql';
+
+  const headers = {
+    accept: '*/*',
+    'accept-language': 'en-GB,en;q=0.8',
+    'cache-control': 'no-cache',
+    'content-type': 'application/json',
+    cookie: 'your-cookie-here',
+    origin: 'https://stake.com',
+    pragma: 'no-cache',
+    priority: 'u=1, i',
+    referer: 'https://stake.com/casino/games/dice',
+    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Brave";v="126"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-model': '""',
+    'sec-ch-ua-platform': '"Linux"',
+    'sec-ch-ua-platform-version': '"6.8.11"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'sec-gpc': '1',
+    'user-agent':
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    'x-access-token': 'your-access-token',
+    'x-lockdown-token': 'your-lockdown-token',
+  };
+
+  const body = JSON.stringify({
+    query: `mutation DiceRoll($amount: Float!, $target: Float!, $condition: CasinoGameDiceConditionEnum!, $currency: CurrencyEnum!, $identifier: String!) {
+          diceRoll(
+          amount: $amount
+          target: $target
+          condition: $condition
+          currency: $currency
+          identifier: $identifier
+          ) {
+          ...CasinoBet
+          state {
+              ...CasinoGameDice
+          }
+          }
+      }
+
+      fragment CasinoBet on CasinoBet {
+          id
+          active
+          payoutMultiplier
+          amountMultiplier
+          amount
+          payout
+          updatedAt
+          currency
+          game
+          user {
+          id
+          name
+          }
+      }
+
+      fragment CasinoGameDice on CasinoGameDice {
+          result
+          target
+          condition
+      }`,
+    variables: {
+      target: 50.5,
+      condition: 'above',
+      identifier: '2xQRcryQ4Kfa63pVxJ2mt',
+      amount: amount,
+      currency: 'usdt',
+    },
+  });
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    });
+
+    if (response.status === 502) {
+      console.error('502 Bad Gateway error. Retrying...');
+      setTimeout(async () => {
+        amount = fixed_amount;
+        await sendRequest();
+      }, 60 * 1000);
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let result = data.data.diceRoll;
+    let payout = result.payout;
+    let state = result.state.result;
+
+    console.log(state + ' __ ' + amount);
+
+    if (payout === 0) {
+      amount = amount * 2;
+    } else {
+      amount = fixed_amount;
+    }
+
+    await sendRequest();
+  } catch (error) {
+    console.error('Error occurred:', error);
+    setTimeout(async () => {
+      amount = fixed_amount;
+      await sendRequest();
+    }, 60 * 1000);
+  }
+}
+
+sendRequest();
