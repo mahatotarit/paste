@@ -1,34 +1,36 @@
 
-let fixed_amount = 0.00003;
-let amount = 0.00003;
+let fixed_amount = 0.00001;
+let amount = 0.00001;
 
 async function sendRequest() {
   const url = 'https://stake.com/_api/graphql';
 
-  const headers = {
-    accept: '*/*',
-    'accept-language': 'en-GB,en;q=0.8',
-    'cache-control': 'no-cache',
-    'content-type': 'application/json',
-    cookie: 'your-cookie-here',
-    origin: 'https://stake.com',
-    pragma: 'no-cache',
-    priority: 'u=1, i',
-    referer: 'https://stake.com/casino/games/dice',
-    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Brave";v="126"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-model': '""',
-    'sec-ch-ua-platform': '"Linux"',
-    'sec-ch-ua-platform-version': '"6.8.11"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    'sec-gpc': '1',
-    'user-agent':
-      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    'x-access-token': 'your-access-token',
-    'x-lockdown-token': 'your-lockdown-token',
-  };
+      const headers = {
+        accept: '*/*',
+        'accept-language': 'en-GB,en;q=0.8',
+        'cache-control': 'no-cache',
+        'content-type': 'application/json',
+        cookie:
+          'currency_hideZeroBalances=false; currency_currencyView=crypto; fiat_number_format=en; cookie_consent=false; sidebarView=hidden; casinoSearch=["Monopoly","Crazy Time","Sweet Bonanza","Money Train","Reactoonz"]; sportsSearch=["Liverpool FC","Kansas City Chiefs","Los Angeles Lakers","FC Barcelona","FC Bayern Munich"]; sportMarketGroupMap={}; oddsFormat=decimal; locale=en; intercom-id-cx1ywgf2=dad22207-a275-4454-b868-86ddc0ddb04a; intercom-device-id-cx1ywgf2=30afc2d0-1934-49f1-a98c-53606b021863; session=75f22a38f23bd4a35a8675786bf54599bcaeac18dc0b02d45f2074f892e7034d828e89ce64bb4c012bcf554af892146f; session_info={"id":"ec48b51b-0e2b-426c-8fea-b832aad87d59","sessionName":"Chrome (Unknown)","ip":"107.181.177.136","country":"CA","city":"Edmonton","active":true,"updatedAt":"Tue, 19 Nov 2024 03:16:23 GMT"}; hideBalances=false; leftSidebarView_v2=minimized; currency_currency=usdt; cf_chl_rc_m=2; __cf_bm=elmP2a46stOF7Okmhg.8TUA5hedLQuByui_UqiD8lBU-1732109111-1.0.1.1-j1YEUxhx4CjMZarMSd..9yfTC21ikL_fUY9wiJFrezeGwVo3NqG2Hf85JRaSmBUZQnMYgpOsD81sAFYN580Czw; _cfuvid=mlSYB.Ph9clvgFS09u7saX2ZwEdNxUt9LHrci8V8pUk-1732109111843-0.0.1.1-604800000; cf_clearance=j07i672KEwpv937X2_7eo1IFfNJdksT3nfcrFsO7sBg-1732109133-1.2.1.1-0JWpCrZWubFK8jRp6OyqFw5Nc0SO1cGRUb8u3U_9v82VlbeCD1PuTfhnRkxPcO18mdQ10lS2RqJlQiSqU_6xuZiEndnHkLHruCUXxGMXFK6nbu4Iv2u2.6uq6yYh__uFzKzZ3XqIr6a8b2500xQANXRHGWLPIBH2n7A2y8gZmBj2_5qhhHD6.cSgrkB1_h86Imx1VZc.2oX6PPI6hxU7B5.B_vFFfMU7EWfocNVzCxfjzhMCpbMU806VbUrgox58yh61.c9i0TPxN8C6p9IWJ2Ul4.C6G1epm9WGrcRDTO2D3qgQWmq9vT7FrfK.4e2ISZTrANwT8vTspzAF0ZdZydnORwlWuPKYbunHb6KgHsZ8DavpoVrcaIdCE3ALcuv3TpCXXapB3PcZUgNJAz965b2HECcwbPRu4ZfamNAayH8; intercom-session-cx1ywgf2=TkhiZDB1NnhoVHZ5VDF4aTB5WUlEdnQ0QVJkbFV2VllwY2MzRXFJbDcwUHNXVkZ6TmxLdzVrUTRuTWJRU252aS0tM1k0b201QkJLUGdEOTFES3A1UnAxQT09--d9300885f17887ae4fbeba7201421d09ba608011; _dd_s=rum=0&expire=1732110082508',
+        origin: 'https://stake.com',
+        pragma: 'no-cache',
+        priority: 'u=1, i',
+        referer: 'https://stake.com/casino/games/dice',
+        'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Brave";v="126"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-model': '""',
+        'sec-ch-ua-platform': '"Linux"',
+        'sec-ch-ua-platform-version': '"6.8.11"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'sec-gpc': '1',
+        'user-agent':
+          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'x-access-token':
+          '75f22a38f23bd4a35a8675786bf54599bcaeac18dc0b02d45f2074f892e7034d828e89ce64bb4c012bcf554af892146f',
+        'x-lockdown-token': 's5MNWtjTM5TvCMkAzxov',
+      };
 
   const body = JSON.stringify({
     query: `mutation DiceRoll($amount: Float!, $target: Float!, $condition: CasinoGameDiceConditionEnum!, $currency: CurrencyEnum!, $identifier: String!) {
