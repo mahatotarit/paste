@@ -1,6 +1,6 @@
 
-let fixed_amount = 0.00001;
-let amount = 0.00001;
+let fixed_amount = 0.00003;
+let amount = 0.00003;
 
 async function sendRequest() {
   const url = 'https://stake.com/_api/graphql';
